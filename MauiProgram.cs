@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using hfonsecaS5A.Utils;
+using Microsoft.Extensions.Logging;
 
 namespace hfonsecaS5A
 {
@@ -14,9 +15,11 @@ namespace hfonsecaS5A
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+            string dbPath = FileAccessHelper.GetlocalFilePath("personas.db");
+            builder.Services.AddSingleton<PersonRepository>(s => ActivatorUtilities.CreateInstance<PersonRepository>(s, dbPath));
 
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();
